@@ -1,4 +1,4 @@
-import domain.{Grid, MarsRoverError, RobotInstructions, RobotPosition}
+import domain.{Grid, MarsRoverError, RoverInstructions, RoverPosition}
 import input.MultiLineInput
 
 import scala.io.StdIn.readLine
@@ -10,14 +10,14 @@ object Main {
     val gridMessage =
       "Please enter your desired grid size (in the form <Width> <Height>, i.e. 4 6) >>"
     val positionMessage =
-      "Please input the initial starting positions of your robots, each on a new line. When you are ready to submit, please hit enter again on an empty line."
+      "Please input the initial starting positions of your rovers, each on a new line. When you are ready to submit, please hit enter again on an empty line."
 
-    val output: Either[MarsRoverError, List[Either[MarsRoverError, RobotPosition]]] = for {
+    val output: Either[MarsRoverError, List[Either[MarsRoverError, RoverPosition]]] = for {
       gridInput <- Right(readLine(gridMessage))
       grid      <- Grid.fromString(gridInput)
       _ = println(positionMessage)
-      robots <- Right(MultiLineInput.readLinesUntilEmpty(RobotInstructions.fromString))
-    } yield Program.run(grid, robots)
+      rovers <- Right(MultiLineInput.readLinesUntilEmpty(RoverInstructions.fromString))
+    } yield Program.run(grid, rovers)
 
     output.fold(
       err => println(s"There was a failure parsing your input, error was: ${err.getMessage}"),

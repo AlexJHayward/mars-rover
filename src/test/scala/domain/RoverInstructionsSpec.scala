@@ -6,18 +6,18 @@ import org.scalatest.matchers.must.Matchers
 import org.scalatest.prop.TableDrivenPropertyChecks
 import org.scalatest.wordspec.AnyWordSpec
 
-class RobotInstructionsSpec
+class RoverInstructionsSpec
     extends AnyWordSpec
     with Matchers
     with TableDrivenPropertyChecks
     with EitherValues {
 
   "the parser" should {
-    "parse robot instructions" when {
+    "parse rover instructions" when {
       "the instruction is valid" in {
-        val Right(actual) = RobotInstructions.fromString("(0, 2, N) FFLFRFF")
-        val expected = RobotInstructions(
-          RobotPosition(Coordinate(0, 2), Orientation.North),
+        val Right(actual) = RoverInstructions.fromString("(0, 2, N) FFLFRFF")
+        val expected = RoverInstructions(
+          RoverPosition(Coordinate(0, 2), Orientation.North),
           List(Forward, Forward, Direction.Left, Forward, Direction.Right, Forward, Forward)
         )
 
@@ -25,9 +25,9 @@ class RobotInstructionsSpec
       }
 
       "the instruction have no directions" in {
-        val Right(actual) = RobotInstructions.fromString("(0, 2, N)")
-        val expected = RobotInstructions(
-          RobotPosition(Coordinate(0, 2), Orientation.North),
+        val Right(actual) = RoverInstructions.fromString("(0, 2, N)")
+        val expected = RoverInstructions(
+          RoverPosition(Coordinate(0, 2), Orientation.North),
           List.empty
         )
 

@@ -1,11 +1,11 @@
 package domain
 
-import domain.MarsRoverError.{DirectionParsingError, RobotInstructionParsingError}
+import domain.MarsRoverError.{DirectionParsingError, RoverInstructionParsingError}
 
-case class RobotInstructions(initialPosition: RobotPosition, directions: List[Direction])
+case class RoverInstructions(initialPosition: RoverPosition, directions: List[Direction])
 
-object RobotInstructions {
-  def fromString(str: String): Either[MarsRoverError, RobotInstructions] = {
+object RoverInstructions {
+  def fromString(str: String): Either[MarsRoverError, RoverInstructions] = {
     val sanitised          = str.filterNot(_.isWhitespace).toUpperCase
     val instructionPattern = """\(([0-9],[0-9]),([NSEW])\)([FLR]*)""".r
 
@@ -14,10 +14,10 @@ object RobotInstructions {
         for {
           initialPosition <- Coordinate.fromString(maybePosition)
           orientation     <- Orientation.fromString(maybeOrientation)
-          position = RobotPosition(initialPosition, orientation)
+          position = RoverPosition(initialPosition, orientation)
           instructions <- parseDirections(maybeDirections)
-        } yield RobotInstructions(position, instructions)
-      case _ => Left(RobotInstructionParsingError(str))
+        } yield RoverInstructions(position, instructions)
+      case _ => Left(RoverInstructionParsingError(str))
     }
   }
 

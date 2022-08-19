@@ -1,4 +1,4 @@
-import domain.MarsRoverError.RobotLost
+import domain.MarsRoverError.RoverLost
 import domain._
 
 import scala.annotation.tailrec
@@ -7,19 +7,19 @@ object Program {
 
   def run(
       grid: Grid,
-      instructions: List[RobotInstructions]
-  ): List[Either[MarsRoverError, RobotPosition]] = instructions.map(executeRobotMovement(_, grid))
+      instructions: List[RoverInstructions]
+  ): List[Either[MarsRoverError, RoverPosition]] = instructions.map(executeRoverMovement(_, grid))
 
-  private def executeRobotMovement(
-      robotInstructions: RobotInstructions,
+  private def executeRoverMovement(
+      roverInstructions: RoverInstructions,
       grid: Grid
-  ): Either[MarsRoverError, RobotPosition] = {
+  ): Either[MarsRoverError, RoverPosition] = {
 
     @tailrec
     def rec(
-        currentPosition: RobotPosition,
+        currentPosition: RoverPosition,
         nextMovements: List[Direction]
-    ): Either[MarsRoverError, RobotPosition] =
+    ): Either[MarsRoverError, RoverPosition] =
       nextMovements match {
         case Nil => Right(currentPosition)
         case thisMove :: nextMoves =>
@@ -29,17 +29,17 @@ object Program {
           }
       }
 
-    rec(robotInstructions.initialPosition, robotInstructions.directions)
+    rec(roverInstructions.initialPosition, roverInstructions.directions)
   }
 
   private def doMovement(
       thisMove: Direction,
-      currentPosition: RobotPosition,
+      currentPosition: RoverPosition,
       grid: Grid
-  ): Either[MarsRoverError, RobotPosition] = {
+  ): Either[MarsRoverError, RoverPosition] = {
     val newPosition = currentPosition.applyMovement(thisMove)
 
     if (grid.containsCoordinate(newPosition.coord)) Right(newPosition)
-    else Left(RobotLost(currentPosition))
+    else Left(RoverLost(currentPosition))
   }
 }

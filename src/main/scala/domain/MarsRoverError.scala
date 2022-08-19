@@ -3,7 +3,7 @@ package domain
 sealed trait MarsRoverError extends Exception
 
 object MarsRoverError {
-  case class RobotLost(lastKnownPosition: RobotPosition) extends MarsRoverError {
+  case class RoverLost(lastKnownPosition: RoverPosition) extends MarsRoverError {
     override def getMessage: String = s"${lastKnownPosition.pretty} LOST"
   }
 
@@ -12,9 +12,9 @@ object MarsRoverError {
       s"Could not parse grid dimensions. Dimensions must be in the format <width>x<height> where width and height are both positive integers. Failed input was \"$failedInput.\""
   }
 
-  case class RobotInstructionParsingError(instructions: String) extends MarsRoverError {
+  case class RoverInstructionParsingError(instructions: String) extends MarsRoverError {
     override def getMessage: String =
-      s"Could not parse robot instructions. Must be in the form (initial x, initial y, orientation) instruction[]. Failed input was \"$instructions.\""
+      s"Could not parse rover instructions. Must be in the form (initial x, initial y, orientation) instruction[]. Failed input was \"$instructions.\""
   }
 
   case class DirectionParsingError(directions: String) extends MarsRoverError {
