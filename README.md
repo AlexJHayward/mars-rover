@@ -2,7 +2,7 @@
 
 ## Running the code
 
-I've packaged an sbt executable (shamelessly stolen from the PlayFramework SBT starter template) that should hopefully make this easy enough to run. If for whatever reason that doesn't work, `brew install sbt` should install SBT nicely enough.
+I've packaged an `/.sbt` script and `sbt-dist` directory (shamelessly stolen from the PlayFramework SBT starter template) that should hopefully make this easy enough to run. As long as you have Java installed (any version should do) then the scripts here should deal with getting everything else setup for you. If for whatever reason that doesn't work, `brew install sbt` should be all you need to get up and running.
 
 The other option is opening the project in IntelliJ with the Scala plugin and that _should_ be packaged with everything you need to click the big green arrow in `Main.scala`. 
 
@@ -20,9 +20,9 @@ The program will then prompt you through the steps required to run it.
 
 ## Structure of the project
 
-Most of the interesting stuff lives in `domain/` and in `Program.scala`. `Main.scala` and `input/` are concerned with all the interaction with the console, our 'side-effects', that are pushed out to the edge of the system.
+Most of the interesting stuff lives in `domain/` and in `Program.scala`. `Main.scala` and `input/` are concerned with all the interaction with the console, our 'side-effects'. The actual 'business' logic lives in `Program`, and `Main` is just a run-harness. 
 
-The only dependency this project has is `scalatest` for testing, it should only require vanilla Scala to compile and run the project itself.
+The only dependency this project has is `scalatest` for testing, the stuff the scripts install is mostly for running SBT itself.
 
 ## What I didn't get to/want to do next
 
